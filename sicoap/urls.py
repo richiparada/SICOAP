@@ -18,5 +18,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('proveedores.urls')) #llama a las URL de la app proveedores y la utiliza sin un prefijo anterior
+    path('api/', include('proveedores.urls')),
 ]
