@@ -20,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-h%tm759$!6c+&srspx%+xi1x7q!w_w9dyl=do5xs_eb*85=lg^'
+SECRET_KEY = 'django-insecure-(zyf%sc)j^&s02pexm6h-0y$m#v!-%a8@a@vw5ck_uv7(-yq10'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'proveedores',
-    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -50,12 +49,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-]
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:8080",
 ]
 
 ROOT_URLCONF = 'sicoap.urls'
