@@ -118,12 +118,12 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1 class="m-0">Dashboard</h1>
+            <h1 class="m-0">Registro de Proveedores</h1>
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="/index">Inicio</a></li>
-              <li class="breadcrumb-item active">Dashboard</li>
+              <li class="breadcrumb-item active">Registro de Proveedor</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -133,20 +133,7 @@
 
     <!-- Main content -->
     <section class="content">
-      <div class="col-lg-3 col-6">
-            <!-- small box -->
-        <div class="small-box bg-warning">
-          <div class="inner">
-            <h3>Registro</h3>
-
-            <p>Registro de Proveedores</p>
-          </div>
-          <div class="icon">
-            <i class="ion ion-person-add"></i>
-          </div>
-          <a href="/registro" class="small-box-footer">Registrar <i class="fas fa-arrow-circle-right"></i></a>
-        </div>
-      </div>    
+         
 
           <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
@@ -195,7 +182,7 @@
 
 
                   <li class="nav-item menu-open">
-                    <a href="/registro" class="nav-link">
+                    <a href="#" class="nav-link">
                       <i class="nav-icon fas fa-edit"></i>
                       <p>
                         Registro del Proveedor                        
@@ -211,4 +198,57 @@
             </div>
             <!-- /.sidebar -->
           </aside>
+
+
+          
+        
+            <!-- Contenido del registro -->
+            <section class="content">
+              <div class="container-fluid">
+                <div class="row">
+                  <!-- left column -->
+                  <div class="col-md-6">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
+                      <div class="card-header">
+                        <h3 class="card-title">Información de registro del proveedor que ingresa</h3>
+                      </div>
+                      <!-- /.card-header -->
+                      <!-- form start -->
+                      <form>
+                        <div class="card-body">
+                          <div class="form-group">
+                            <label for="exampleInputEmail1">Nombre</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Escriba Nombre del proveedor">
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputPassword1">Empresa</label>
+                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Ingrese nombre de la Empresa">
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputPassword1">Placa Patente</label>
+                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Ingrese Placa Patente del Vehículo">
+                          </div>
+                          <div class="form-group">
+                            <label for="exampleInputPassword1">Número de Contacto</label>
+                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Ingrese número de contacto">
+                          </div>
+                        </div>
+                        <!-- /.card-body -->
+                        <tr>
+                          <td>
+                            <button type="button" class="btn btn-block btn-info btn-lg">Registrar</button>
+                          </td>
+                          <td>
+                            <button type="button" class="btn btn-block btn-danger btn-lg">Cancelar</button>
+                          </td>
+                        </tr>
+
+                      </form>
+                    </div>
+                    <!-- /.card -->
+        
+                    
+
+
 </html>
