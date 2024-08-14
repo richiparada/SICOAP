@@ -18,3 +18,7 @@ def proveedores_list(request):
 def proveedores_registro(request):
     proveedores = Proveedor.objects.all()
     return render(request, 'registro.html', {'proveedores': proveedores})
+
+def proveedores_info(request):
+    proveedores = Proveedor.objects.all()
+    return render(request, 'info.html', {'proveedores': proveedores})
