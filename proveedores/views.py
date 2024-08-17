@@ -25,15 +25,15 @@ def proveedores_info(request):
     return render(request, 'info.html', {'proveedores': proveedores})
 
 def proveedores_registro(request):
-    if request.method == "POST":
+    if request.method == 'POST':
         form = ProveedorForm(request.POST)
-        print(form)
         if form.is_valid():
-            form.save()
-            print(form)
+            proveedor = form.save(commit=False)
+            print(proveedor.nombre, proveedor.rut, proveedor.empresa, proveedor.placa_patente, proveedor.numero_contacto)
+            proveedor.save()
             return redirect('proveedores_list')  # Redirige a la lista de proveedores después de guardar   
-
+        else:
+            print(form.errors)
     else:
         form = ProveedorForm()
-    
     return render(request, 'registro.html', {'form': form})
