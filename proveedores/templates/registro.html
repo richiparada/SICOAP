@@ -142,27 +142,30 @@
                       </div>
                       <!-- /.card-header -->
                       <!-- form start -->
-                      <form>
+                      <form method="POST" action="{% url 'proveedores_registro' %}">
+                        {% csrf_token %}
                         <div class="card-body">
                           <div class="form-group">
-                            <label for="exampleInputEmail1">Nombre</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Escriba Nombre del proveedor">
+                            <label for="{{form.id_nombre}}">Nombre</label>
+                            {{form.id_nombre}}
+                            <input type="text" class="form-control nombre" id="id_nombre" placeholder="Escriba Nombre del proveedor">
+
                           </div>
                           <div class="form-group">
-                            <label for="exampleInputEmail1">Rut</label>
-                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Escriba Rut del proveedor">
+                            <label for="id_rut">Rut</label>
+                            <input type="text" class="form-control rut" id="id_rut" placeholder="Escriba Rut del proveedor">
                           </div>
                           <div class="form-group">
-                            <label for="exampleInputPassword1">Empresa</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Ingrese nombre de la Empresa">
+                            <label for="id_empresa">Empresa</label>
+                            <input type="text" class="form-control empresa" id="id_empresa" placeholder="Ingrese nombre de la Empresa">
                           </div>
                           <div class="form-group">
-                            <label for="exampleInputPassword1">Placa Patente</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Ingrese Placa Patente del Vehículo">
+                            <label for="id_placa_patente">Placa Patente</label>
+                            <input type="text" class="form-control placa_patente" id="id_placa_patente" placeholder="Ingrese Placa Patente del Vehículo">
                           </div>
                           <div class="form-group">
-                            <label for="exampleInputPassword1">Número de Contacto</label>
-                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Ingrese número de contacto">
+                            <label for="id_numero_contacto">Número de Contacto</label>
+                            <input type="text" class="form-control" id="id_numero_contacto numero_contacto" placeholder="Ingrese número de contacto">
                           </div>
 
                           <div class="row">
@@ -183,14 +186,10 @@
 
                         </div>
                         <!-- /.card-body -->
-                        <tr>
-                          <td>
-                            <button type="button" class="btn btn-block btn-info btn-lg">Registrar</button>
-                          </td>
-                          <td>
-                            <button type="button" class="btn btn-block btn-danger btn-lg">Cancelar</button>
-                          </td>
-                        </tr>
+                        <div class="card-footer">
+                          <button type="submit" class="btn btn-block btn-info btn-lg">Registrar</button>
+                          <a href="{% url 'proveedores_list' %}" class="btn btn-block btn-danger btn-lg">Cancelar</a>
+                        </div>
 
                       </form>
                     </div>
