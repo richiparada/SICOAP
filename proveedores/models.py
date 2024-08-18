@@ -6,6 +6,7 @@ class Proveedor(models.Model):
     placa_patente = models.CharField(max_length=10)
     empresa = models.CharField(max_length=100)
     numero_contacto = models.CharField(max_length=15)
+    fecha_ingreso = models.DateTimeField(auto_now_add=True)
     
 
     def __str__(self):

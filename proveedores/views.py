@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from .models import Proveedor, Bodega
 from .serializers import ProveedorSerializer, BodegaSerializer
 from django.shortcuts import render, redirect
-from .forms import ProveedorForm
+from .forms import ProveedorForm, BodegaForm
 
 class ProveedorViewSet(viewsets.ModelViewSet):
     queryset = Proveedor.objects.all()
