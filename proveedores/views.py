@@ -13,7 +13,7 @@ class BodegaViewSet(viewsets.ModelViewSet):
     serializer_class = BodegaSerializer
     
 def proveedores_list(request):
-    proveedores = Proveedor.objects.all()
+    proveedores = Proveedor.objects.filter(retirado=False)
     return render(request, 'index.html', {'proveedores': proveedores})
 
 '''def proveedores_registro(request):
@@ -37,3 +37,9 @@ def proveedores_registro(request):
     else:
         form = ProveedorForm()
     return render(request, 'registro.html', {'form': form})
+
+def marcar_retiro(request, proveedor_id):
+    proveedor = Proveedor.objects.get(id=proveedor_id)
+    proveedor.retirado = True
+    proveedor.save()
+    return redirect('proveedores_list')  # Redirige al listado de proveedores

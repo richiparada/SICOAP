@@ -7,6 +7,7 @@ class Proveedor(models.Model):
     empresa = models.CharField(max_length=100)
     numero_contacto = models.CharField(max_length=15)
     fecha_ingreso = models.DateTimeField(auto_now_add=True)
+    retirado = models.BooleanField(default=False)
     
 
     def __str__(self):

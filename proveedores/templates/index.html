@@ -113,16 +113,24 @@
                 </thead>
                 <tbody>
                 
-                  <!-- Prueba de muestra de usuarios -->
-                  {% for proveedores in proveedores %}
-                    <tr>
-                      <td>
-                        <p>{{proveedores.nombre}}</p>
-                      </td>
-                      <td> <p>{{proveedores.empresa}}</p> </td>
-                      <td> <p>{{proveedores.rut}}</p> </td>
-                      <td> <p>{{proveedores.numero_contacto}}</p> </td>  
-                    </tr>
+                  <!-- Muestra de usuarios -->
+                  {% for proveedor in proveedores %}
+                    {% if not proveedor.retirado %}
+                      <tr>
+                        <td>
+                          <p>{{proveedor.nombre}}</p>
+                        </td>
+                        <td> <p>{{proveedor.empresa}}</p> </td>
+                        <td> <p>{{proveedor.rut}}</p> </td>
+                        <td> <p>{{proveedor.numero_contacto}}</p> </td>
+                        <td>
+                          <form method="post" action="{% url 'marcar_retiro' proveedor.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Marcar Retiro</button>
+                          </form>
+                        </td>
+                      </tr>
+                    {% endif %}
                   {% endfor %}
                 </tbody>
               </table>
