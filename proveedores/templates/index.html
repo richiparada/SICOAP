@@ -117,9 +117,8 @@
                   {% for proveedor in proveedores %}
                     {% if not proveedor.retirado %}
                       <tr>
-                        <td>
-                          <p>{{proveedor.nombre}}</p>
-                        </td>
+                        <td><p>{{proveedor.nombre}}</p></td>
+                        <td><p>{{proveedor.apellido}}</p></td>
                         <td> <p>{{proveedor.empresa}}</p> </td>
                         <td> <p>{{proveedor.rut}}</p> </td>
                         <td> <p>{{proveedor.numero_contacto}}</p> </td>

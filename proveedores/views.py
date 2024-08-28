@@ -29,7 +29,7 @@ def proveedores_registro(request):
         form = ProveedorForm(request.POST)
         if form.is_valid():
             proveedor = form.save(commit=False)
-            print(proveedor.nombre, proveedor.rut, proveedor.empresa, proveedor.placa_patente, proveedor.numero_contacto)
+            print(proveedor.nombre, proveedor.apellido, proveedor.rut, proveedor.empresa, proveedor.placa_patente, proveedor.numero_contacto)
             proveedor.save()
             return redirect('proveedores_list')  # Redirige a la lista de proveedores después de guardar   
         else:

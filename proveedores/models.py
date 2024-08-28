@@ -2,6 +2,7 @@ from django.db import models
 
 class Proveedor(models.Model):
     nombre = models.CharField(max_length=100)
+    apellido = models.CharField(max_length=100, default='Apellido por defecto')
     rut = models.CharField(max_length=12)
     placa_patente = models.CharField(max_length=10)
     empresa = models.CharField(max_length=100)
