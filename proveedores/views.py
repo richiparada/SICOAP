@@ -2,6 +2,8 @@ from rest_framework import viewsets
 from .models import Proveedor, Bodega
 from .serializers import ProveedorSerializer, BodegaSerializer
 from django.shortcuts import render, redirect
+from django.db.models import Count
+from django.db.models.functions import TruncMonth
 from .forms import ProveedorForm
 
 class ProveedorViewSet(viewsets.ModelViewSet):
@@ -43,3 +45,18 @@ def marcar_retiro(request, proveedor_id):
     proveedor.retirado = True
     proveedor.save()
     return redirect('proveedores_list')  # Redirige al listado de proveedores
+
+def estadisticas_proveedores(request):
+    # Contar la cantidad de proveedores registrados por mes
+    proveedores_por_mes = (
+        Proveedor.objects.annotate(month=TruncMonth('fecha_ingreso'))
+        .values('month')
+        .annotate(count=Count('id'))
+        .order_by('month')
+    )
+    
+    # Pasar los datos a la plantilla
+    context = {
+        'proveedores_por_mes': proveedores_por_mes,
+    }
+    return render(request, 'estadisticas.html', context)
