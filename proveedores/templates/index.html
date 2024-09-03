@@ -140,6 +140,7 @@
                   <th>Empresa</th>
                   <th>Rut</th>
                   <th>Número de Contacto</th>
+                  <th>Bodega</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -154,6 +155,7 @@
                         <td> <p>{{proveedor.empresa}}</p> </td>
                         <td> <p>{{proveedor.rut}}</p> </td>
                         <td> <p>{{proveedor.numero_contacto}}</p> </td>
+                        <td> <p>{{proveedor.bodega}}</p> </td>
                         <td>
                           <form method="post" action="{% url 'marcar_retiro' proveedor.id %}">
                             {% csrf_token %}

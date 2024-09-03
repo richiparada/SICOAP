@@ -31,6 +31,9 @@ def proveedores_registro(request):
         form = ProveedorForm(request.POST)
         if form.is_valid():
             proveedor = form.save(commit=False)
+            bodega_id = request.POST.get('bodega')
+            if bodega_id:
+                proveedor.bodega = Bodega.objects.get(id=bodega_id)
             print(proveedor.nombre, proveedor.apellido, proveedor.rut, proveedor.empresa, proveedor.placa_patente, proveedor.numero_contacto)
             proveedor.save()
             return redirect('proveedores_list')  # Redirige a la lista de proveedores después de guardar   
@@ -38,7 +41,8 @@ def proveedores_registro(request):
             print(form.errors)
     else:
         form = ProveedorForm()
-    return render(request, 'registro.html', {'form': form})
+    bodegas = Bodega.objects.all()
+    return render(request, 'registro.html', {'form': form, 'bodegas': bodegas})
 
 def marcar_retiro(request, proveedor_id):
     proveedor = Proveedor.objects.get(id=proveedor_id)

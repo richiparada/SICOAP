@@ -211,12 +211,10 @@
                               <!-- select -->
                               <div class="form-group">
                                 <label>Seleccione Almacen</label>
-                                <select class="form-control">
-                                  <option>Almacen General</option>
-                                  <option>Farmacia</option>
-                                  <option>Almacen de Insumos</option>
-                                  <option>Bodega de Alimentación</option>
-                                  <option>Almacen Dental</option>
+                                <select class="form-control" name="bodega">
+                                  {% for bodega in bodegas %}
+                                    <option value="{{ bodega.id }}">{{ bodega.tipo_bodega }}</option>
+                                  {% endfor %}
                                 </select>
                               </div>
                             </div>                            
