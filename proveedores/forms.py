@@ -14,6 +14,7 @@ class ProveedorForm(forms.ModelForm):
             'numero_contacto': forms.TextInput(attrs={'class': 'numero_contacto', 'placeholder': 'Ingrese número de contacto'}),
         }
     
+    #Normalizar datos
     def clean_nombre(self):
         nombre = self.cleaned_data.get('nombre')
         return nombre.strip().title() # Eliminar espacios y capitalizar cada palabra
