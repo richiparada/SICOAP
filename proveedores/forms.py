@@ -1,6 +1,7 @@
 from django import forms
 from .models import Proveedor, Bodega
 
+#Formulario de registro de proveedores
 class ProveedorForm(forms.ModelForm):
     class Meta:
         model = Proveedor
@@ -43,3 +44,14 @@ class ProveedorForm(forms.ModelForm):
     def clean_email(self):
         email = self.cleaned_data.get('email')
         return email.strip().lower()  # Eliminar espacios y convertir a minúsculas
+
+#Formulario para registrar Bodega
+class BodegaForm(forms.ModelForm):
+    class Meta:
+        model = Bodega
+        fields = ['tipo_bodega', 'nombre_responsable']
+        widgets = {
+            'tipo_bodega': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el tipo de bodega'}),
+            'nombre_responsable': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre del responsable'}),
+        }
+        
