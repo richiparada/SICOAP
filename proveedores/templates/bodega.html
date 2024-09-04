@@ -80,37 +80,76 @@
     <!-- Main content -->
     <section class="content">
       
-      <!-- Contenido tabla Bodegas-->
-      <div class="card">
-        <div class="card-header">
-          <h3 class="card-title">Tabla de Bodegas y Responsables</h3>
-        </div>
-        <!-- /.card-header -->
-        <div class="card-body">
-          <table id="example2" class="table table-bordered table-hover">
-            <thead>
-            <tr>
-              <th>Bodega</th>
-              <th>Responsable</th>
-            </tr>
-            </thead>
-            <tbody>
-              {% for bodegas in bodegas %}
-                        <tr>
-                          <td><p>{{bodegas.tipo_bodega}}</p></td>
-                          <td><p>{{bodegas.nombre_responsable}}</p></td>
-                        </tr>
-              {% endfor %}
-            </tbody>
-            <tfoot>
-            <tr>
-              <th>Bodega</th>
-              <th>Responsable</th>
-            </tr>
-            </tfoot>
-          </table>
-        </div>
-        <!-- /.card-body -->
+      <div class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-lg-6">
+              <!-- Contenido tabla Bodegas-->
+              <div class="card">
+                <div class="card-header border-0">
+                  <h3 class="card-title">Tabla de Bodegas y Responsables</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body">
+                  <table id="example2" class="table table-bordered table-hover">
+                    <thead>
+                    <tr>
+                      <th>Bodega</th>
+                      <th>Responsable</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                      {% for bodegas in bodegas %}
+                                <tr>
+                                  <td><p>{{bodegas.tipo_bodega}}</p></td>
+                                  <td><p>{{bodegas.nombre_responsable}}</p></td>
+                                </tr>
+                      {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                      <th>Bodega</th>
+                      <th>Responsable</th>
+                    </tr>
+                    </tfoot>
+                  </table>
+                </div>
+                <!-- /.card-body -->
+              </div>
+            </div>
+            <div class="col-lg-6">  
+              <div class="card">
+                <div class="card-header">
+                  <h3 class="card-title">Registro de nueva bodega</h3>
+                </div>
+
+                <form method="POST" action="{% url 'bodega_crear' %}">
+                  {% csrf_token %}
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label for="{{form.id_tipo_bodega}}">Nombre de la nueva Bodega</label>
+                      {{form.id_tipo_bodega}}
+                      <input type="text" name="tipo_bodega" class="form-control tipo_bodega" id="id_tipo_bodega" placeholder="Escriba el nombre de la nueva Bodega">
+
+                    </div>
+                    
+                    <div class="form-group">
+                      <label for="id_nombre_responsable">Nombre del responsable de la Bodega</label>
+                      <input type="text" name="nombre_responsable" class="form-control" id="id_nombre_responsable" placeholder="Escriba el Nombre y el apellido de la Bodega">
+                    </div>
+                  </div>
+                  <!-- /.card-body -->
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-block btn-info btn-lg">Registrar nueva Bodega</button>
+                    <a href="{% url 'bodega_list' %}" class="btn btn-block btn-danger btn-lg">Cancelar</a>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>  
+          </div>
+        </div>    
       </div>  
 
 

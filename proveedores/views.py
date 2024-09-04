@@ -67,7 +67,7 @@ def bodega_list(request):
     bodegas = Bodega.objects.all()
     return render(request, 'bodega.html', {'bodegas': bodegas})
 
-def bodega_create(request):
+def bodega_crear(request):
     if request.method == 'POST':
         form = BodegaForm(request.POST)
         if form.is_valid():
