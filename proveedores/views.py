@@ -65,7 +65,7 @@ def estadisticas_proveedores(request):
 
 def bodega_list(request):
     bodegas = Bodega.objects.all()
-    return render(request, 'bodega.html', {'bodegas': bodegas})
+    return render(request, 'listabodega.html', {'bodegas': bodegas})
 
 def bodega_crear(request):
     if request.method == 'POST':
@@ -73,13 +73,15 @@ def bodega_crear(request):
         if form.is_valid():
             form.save()
             return redirect('bodega_list')
+        else:
+            print(form.errors)
     else:
         form = BodegaForm()
     return render(request, 'bodega.html', {'form': form})
 
 
-def bodega_update(request, pk):
-    bodega = get_object_or_404(Bodega, pk=pk)
+def bodega_modificar(request, bodega_id):
+    bodega = get_object_or_404(Bodega, id=bodega_id)
     if request.method == 'POST':
         form = BodegaForm(request.POST, instance=bodega)
         if form.is_valid():
@@ -87,4 +89,4 @@ def bodega_update(request, pk):
             return redirect('bodega_list')
     else:
         form = BodegaForm(instance=bodega)
-    return render(request, 'bodega.html', {'form': form})
+    return render(request, 'modificarbodega.html', {'form': form})

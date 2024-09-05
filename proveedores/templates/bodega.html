@@ -51,7 +51,10 @@
         <a href="/estadisticas" class="nav-link">Estadísticas</a>
       </li>
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="/bodega" class="nav-link">Bodegas</a>
+        <a href="/bodega" class="nav-link">Registrar Bodega</a>
+      </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        <a href="/listabodega" class="nav-link">Lista de Bodegas</a>
       </li>
     </ul>    
   </nav>
@@ -83,47 +86,13 @@
       <div class="content">
         <div class="container-fluid">
           <div class="row">
-            <div class="col-lg-6">
-              <!-- Contenido tabla Bodegas-->
-              <div class="card">
-                <div class="card-header border-0">
-                  <h3 class="card-title">Tabla de Bodegas y Responsables</h3>
-                </div>
-                <!-- /.card-header -->
-                <div class="card-body">
-                  <table id="example2" class="table table-bordered table-hover">
-                    <thead>
-                    <tr>
-                      <th>Bodega</th>
-                      <th>Responsable</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                      {% for bodegas in bodegas %}
-                                <tr>
-                                  <td><p>{{bodegas.tipo_bodega}}</p></td>
-                                  <td><p>{{bodegas.nombre_responsable}}</p></td>
-                                </tr>
-                      {% endfor %}
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                      <th>Bodega</th>
-                      <th>Responsable</th>
-                    </tr>
-                    </tfoot>
-                  </table>
-                </div>
-                <!-- /.card-body -->
-              </div>
-            </div>
-            <div class="col-lg-6">  
+            <div class="col-lg-12">  
               <div class="card">
                 <div class="card-header">
                   <h3 class="card-title">Registro de nueva bodega</h3>
                 </div>
 
-                <form method="POST" action="{% url 'bodega_list' %}">
+                <form method="POST" action="{% url 'bodega_crear' %}">
                   {% csrf_token %}
                   <div class="card-body">
                     <div class="form-group">
@@ -141,7 +110,7 @@
                   <!-- /.card-body -->
                   <div class="card-footer">
                     <button type="submit" class="btn btn-block btn-info btn-lg">Registrar nueva Bodega</button>
-                    <a href="{% url 'bodega_list' %}" class="btn btn-block btn-danger btn-lg">Cancelar</a>
+                    <a href="{% url 'bodega_crear' %}" class="btn btn-block btn-danger btn-lg">Cancelar</a>
                   </div>
 
                 </form>
@@ -215,11 +184,22 @@
                     </a>
                   </li>
 
+                  <li class="nav-header">ADMINISTRACIÓN DE BODEGAS</li>
+                  
                   <li class="nav-item">
                     <a href="/bodega" class="nav-link active">
                       <i class="nav-icon fas fa-warehouse"></i>
                       <p>
-                        Bodegas                            
+                        Registrar Bodega                            
+                      </p>
+                    </a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a href="/listabodega" class="nav-link">
+                      <i class="nav-icon fas fa-warehouse"></i>
+                      <p>
+                        Lista de Bodegas                            
                       </p>
                     </a>
                   </li>
@@ -233,6 +213,13 @@
     </section>
   </div>      
 </div>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+
 <!-- jQuery -->
 <script src="{% static 'lib/adminlte-3.2.0/plugins/jquery/jquery.min.js' %}"></script>
 <!-- jQuery UI 1.11.4 -->
