@@ -80,13 +80,17 @@ def bodega_crear(request):
     return render(request, 'bodega.html', {'form': form})
 
 
-def bodega_modificar(request, bodega_id):
-    bodega = get_object_or_404(Bodega, id=bodega_id)
-    if request.method == 'POST':
-        form = BodegaForm(request.POST, instance=bodega)
-        if form.is_valid():
-            form.save()
-            return redirect('bodega_list')
-    else:
-        form = BodegaForm(instance=bodega)
-    return render(request, 'modificarbodega.html', {'form': form})
+def visitas_bodegas_mensuales(request):
+    visitas = Bodega.objects.annotate(mes=TruncMonth('fecha_visita')).values('mes', 'bodega__tipo_bodega').annotate(visitas=Count('id')).order_by('mes')
+
+    # Organiza los datos en un formato que sea fácil de pasar al frontend
+    datos_grafico = {}
+    for visita in visitas:
+        bodega = visita['bodega__tipo_bodega']
+        mes = visita['mes'].strftime("%Y-%m")
+        if mes not in datos_grafico:
+            datos_grafico[mes] = {}
+        datos_grafico[mes][bodega] = visita['visitas']
+    
+    # Pasar los datos al template
+    return render(request, 'grafico_bodegas.html', {'datos_grafico': datos_grafico})
