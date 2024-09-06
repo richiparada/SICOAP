@@ -1,5 +1,7 @@
+from django.contrib.auth.models import User
 from django.db import models
 
+#Modelo de almacenes
 class Bodega(models.Model):
     tipo_bodega = models.CharField(max_length=45)
     nombre_responsable = models.CharField(max_length=45)
@@ -7,6 +9,7 @@ class Bodega(models.Model):
     def __str__(self) -> str:
         return self.tipo_bodega
 
+#Modelo de proveedores
 class Proveedor(models.Model):
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100, default='Apellido por defecto')
@@ -22,6 +25,15 @@ class Proveedor(models.Model):
     def __str__(self):
         return self.nombre
     
+#Modelo que vincula a los usuarios y crea roles    
+class Perfil(models.Model):
+    ROLES = [
+        ('vigilante', 'Vigilante'),
+        ('supervisor', 'Supervisor'),
+    ]
+    
+    usuario = models.OneToOneField(User, on_delete=models.CASCADE)
+    rol = models.CharField(max_length=10, choices=ROLES)
 
-    
-    
+    def __str__(self):
+        return f'{self.usuario.username} - {self.rol}'    

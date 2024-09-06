@@ -1,6 +1,6 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import ProveedorViewSet, BodegaViewSet, proveedores_list, proveedores_registro, proveedores_info, marcar_retiro, estadisticas_proveedores, bodega_list, bodega_crear, estadisticas_bodegas
+from .views import ProveedorViewSet, BodegaViewSet, proveedores_list, proveedores_registro, proveedores_info, marcar_retiro, estadisticas_proveedores, bodega_list, bodega_crear, estadisticas_bodegas, registro, iniciar_sesion
 
 router = DefaultRouter()
 router.register(r'proveedores', ProveedorViewSet)
@@ -16,4 +16,6 @@ urlpatterns = [
     path('bodega/', bodega_crear, name='bodega_crear'),
     path('listabodega/', bodega_list, name='bodega_list'),
     path('estadisticas_bodega/', estadisticas_bodegas, name='estadisticas_bodegas'),
+    path('registro_usuarios/', registro, name='registro'),
+    path('login/', iniciar_sesion, name='login'),
 ]

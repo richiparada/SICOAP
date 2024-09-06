@@ -1,5 +1,6 @@
 from django import forms
-from .models import Proveedor, Bodega
+from django.contrib.auth.models import User
+from .models import Proveedor, Bodega, Perfil
 import datetime
 
 #Formulario de registro de proveedores
@@ -68,3 +69,32 @@ class MonthSelectForm(forms.Form):
         label="Seleccione el Año",
         widget=forms.Select(attrs={'class': 'form-control'})
     )
+
+#Formulario de Registro de Usuarios
+class RegistroForm(forms.ModelForm):
+    username = forms.CharField(max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput, label="Contraseña")
+    password2 = forms.CharField(widget=forms.PasswordInput, label="Confirmar Contraseña")
+    rol = forms.ChoiceField(choices=Perfil.ROLES)
+
+    class Meta:
+        model = User
+        fields = ['username', 'password']
+
+    # Verificar que las contraseñas coincidan
+    def clean_password2(self):
+        password = self.cleaned_data.get('password')
+        password2 = self.cleaned_data.get('password2')
+
+        if password and password2 and password != password2:
+            raise forms.ValidationError("Las contraseñas no coinciden. Inténtelo de nuevo.")
+        
+        return password2
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password'])  # Hash the password
+        if commit:
+            user.save()
+            perfil = Perfil.objects.create(usuario=user, rol=self.cleaned_data['rol'])
+        return user

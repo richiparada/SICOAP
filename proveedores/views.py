@@ -1,11 +1,14 @@
 from rest_framework import viewsets
 from .models import Proveedor, Bodega
 from .serializers import ProveedorSerializer, BodegaSerializer
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from django.db.models import Count
 from django.db.models.functions import TruncMonth
+from django.contrib.auth import login, authenticate
+from django.contrib.auth.forms import AuthenticationForm
+from .decorators import solo_supervisores
 from django.utils.timezone import now
-from .forms import ProveedorForm, BodegaForm, MonthSelectForm
+from .forms import ProveedorForm, BodegaForm, MonthSelectForm, RegistroForm
 
 class ProveedorViewSet(viewsets.ModelViewSet):
     queryset = Proveedor.objects.all()
@@ -49,6 +52,7 @@ def marcar_retiro(request, proveedor_id):
     proveedor.save()
     return redirect('proveedores_list')  # Redirige al listado de proveedores
 
+@solo_supervisores
 def estadisticas_proveedores(request):
     # Contar la cantidad de proveedores registrados por mes
     proveedores_por_mes = (
@@ -64,10 +68,12 @@ def estadisticas_proveedores(request):
     }
     return render(request, 'estadisticas.html', context)
 
+@solo_supervisores
 def bodega_list(request):
     bodegas = Bodega.objects.all()
     return render(request, 'listabodega.html', {'bodegas': bodegas})
 
+@solo_supervisores
 def bodega_crear(request):
     if request.method == 'POST':
         form = BodegaForm(request.POST)
@@ -80,7 +86,7 @@ def bodega_crear(request):
         form = BodegaForm()
     return render(request, 'bodega.html', {'form': form})
 
-
+@solo_supervisores
 def estadisticas_bodegas(request):
     form = MonthSelectForm(request.GET or None)
     proveedores = Proveedor.objects.all()
@@ -101,3 +107,29 @@ def estadisticas_bodegas(request):
         'form': form,
         'visitas_bodegas': visitas_bodegas,
     })
+
+@solo_supervisores
+def registro(request):
+    if request.method == 'POST':
+        form = RegistroForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = RegistroForm()
+    return render(request, 'registro_usuario.html', {'form': form})
+
+
+def iniciar_sesion(request):
+    if request.method == 'POST':
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('proveedores_list')
+    else:
+        form = AuthenticationForm()
+    return render(request, 'login.html', {'form': form})
