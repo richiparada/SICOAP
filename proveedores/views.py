@@ -4,7 +4,8 @@ from .serializers import ProveedorSerializer, BodegaSerializer
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Count
 from django.db.models.functions import TruncMonth
-from .forms import ProveedorForm, BodegaForm
+from django.utils.timezone import now
+from .forms import ProveedorForm, BodegaForm, MonthSelectForm
 
 class ProveedorViewSet(viewsets.ModelViewSet):
     queryset = Proveedor.objects.all()
@@ -80,17 +81,23 @@ def bodega_crear(request):
     return render(request, 'bodega.html', {'form': form})
 
 
-def visitas_bodegas_mensuales(request):
-    visitas = Bodega.objects.annotate(mes=TruncMonth('fecha_visita')).values('mes', 'bodega__tipo_bodega').annotate(visitas=Count('id')).order_by('mes')
+def estadisticas_bodegas(request):
+    form = MonthSelectForm(request.GET or None)
+    proveedores = Proveedor.objects.all()
 
-    # Organiza los datos en un formato que sea fácil de pasar al frontend
-    datos_grafico = {}
-    for visita in visitas:
-        bodega = visita['bodega__tipo_bodega']
-        mes = visita['mes'].strftime("%Y-%m")
-        if mes not in datos_grafico:
-            datos_grafico[mes] = {}
-        datos_grafico[mes][bodega] = visita['visitas']
-    
-    # Pasar los datos al template
-    return render(request, 'grafico_bodegas.html', {'datos_grafico': datos_grafico})
+    # Filtrar por mes y año
+    if form.is_valid():
+        month = int(form.cleaned_data['month'])
+        year = int(form.cleaned_data['year'])
+        proveedores = proveedores.filter(
+            fecha_ingreso__year=year,
+            fecha_ingreso__month=month
+        )
+
+    # Contar las visitas por bodega
+    visitas_bodegas = proveedores.values('bodega__tipo_bodega').annotate(visitas=Count('bodega')).order_by('-visitas')
+
+    return render(request, 'estadisticas_bodega.html', {
+        'form': form,
+        'visitas_bodegas': visitas_bodegas,
+    })

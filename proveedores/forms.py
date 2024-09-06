@@ -1,5 +1,6 @@
 from django import forms
 from .models import Proveedor, Bodega
+import datetime
 
 #Formulario de registro de proveedores
 class ProveedorForm(forms.ModelForm):
@@ -54,4 +55,16 @@ class BodegaForm(forms.ModelForm):
             'tipo_bodega': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el tipo de bodega'}),
             'nombre_responsable': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Ingrese el nombre del responsable'}),
         }
-        
+
+#Formulario para seleccionar mes        
+class MonthSelectForm(forms.Form):
+    month = forms.ChoiceField(
+        choices=[(i, datetime.date(2008, i, 1).strftime('%B')) for i in range(1, 13)],
+        label="Seleccione el Mes",
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
+    year = forms.ChoiceField(
+        choices=[(year, year) for year in range(2020, datetime.date.today().year + 1)],
+        label="Seleccione el Año",
+        widget=forms.Select(attrs={'class': 'form-control'})
+    )
