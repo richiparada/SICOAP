@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ almacen.tipo_bodega }} - Detalles</title>
+    <meta http-equiv="refresh" content="30">
+    <script>
+        window.onload = function() {
+            // Verifica si la API de síntesis de voz está disponible
+            if ('speechSynthesis' in window) {
+                {% if messages %}
+                    {% for message in messages %}
+                        var utterance = new SpeechSynthesisUtterance("{{ message }}");
+                        speechSynthesis.speak(utterance);
+                    {% endfor %}
+                {% endif %}
+            } else {
+                console.log("La API de síntesis de voz no está soportada en este navegador.");
+            }
+        };
+    </script>
+</head>
+<body>
+    <h1>Almacén: {{ almacen.tipo_bodega }}</h1>
+    <p>Responsable: {{ almacen.nombre_responsable }}</p>
+    
+    <h2>Proveedores Actuales en el Almacén</h2>
+    <ul>
+        {% for proveedor in proveedores %}
+            <li>{{ proveedor.nombre }} {{ proveedor.apellido }} - Empresa: {{ proveedor.empresa }}</li>
+        {% empty %}
+            <li>No hay proveedores actualmente en este almacén.</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

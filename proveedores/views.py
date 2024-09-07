@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from .models import Proveedor, Bodega
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Count
 from django.db.models.functions import TruncMonth
 from django.contrib.auth import login, authenticate
@@ -9,6 +9,7 @@ from .decorators import solo_supervisores
 from django.utils.timezone import now
 from .forms import ProveedorForm, BodegaForm, MonthSelectForm, RegistroForm
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 @login_required  
 def proveedores_list(request):
@@ -31,6 +32,7 @@ def proveedores_registro(request):
             if bodega_id:
                 proveedor.bodega = Bodega.objects.get(id=bodega_id)
             print(proveedor.nombre, proveedor.apellido, proveedor.rut, proveedor.empresa, proveedor.placa_patente, proveedor.numero_contacto)
+            messages.success(request, f'Proveedor {proveedor.nombre} ha sido registrado con éxito en el almacén.')
             proveedor.save()
             return redirect('proveedores_list')  # Redirige a la lista de proveedores después de guardar   
         else:
@@ -134,4 +136,20 @@ def iniciar_sesion(request):
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
+
+
+
+# Vista para mostrar el almacén y solo los proveedores que no se han retirado
+def almacen_detail(request, almacen_id):
+    almacen = get_object_or_404(Bodega, id=almacen_id)
+    
+    # Filtrar los proveedores que están asignados al almacén y no han sido retirados
+    proveedores_activos = Proveedor.objects.filter(bodega=almacen, retirado=False)
+    
+    context = {
+        'almacen': almacen,
+        'proveedores': proveedores_activos  # Solo mostrar los proveedores activos
+    }
+    
+    return render(request, 'almacen_detail.html', context)
 

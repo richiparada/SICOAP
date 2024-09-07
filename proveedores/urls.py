@@ -1,7 +1,7 @@
 from django.urls import path, include
 from django.contrib.auth.views import LogoutView
-from .views import proveedores_list, proveedores_registro, proveedores_info, marcar_retiro, estadisticas_proveedores, bodega_list, bodega_crear, estadisticas_bodegas, registro, iniciar_sesion
-
+from .views import proveedores_list, proveedores_registro, proveedores_info, marcar_retiro, estadisticas_proveedores, bodega_list, bodega_crear, estadisticas_bodegas, registro, iniciar_sesion, almacen_detail
+#from . import views
 
 
 
@@ -18,4 +18,5 @@ urlpatterns = [
     path('registro_usuarios/', registro, name='registro'),
     path('login/', iniciar_sesion, name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),
+    path('almacen/<int:almacen_id>/', almacen_detail, name='almacen_detail'),  # Ruta dinámica para almacenes
 ]
