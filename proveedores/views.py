@@ -1,6 +1,5 @@
 from rest_framework import viewsets
 from .models import Proveedor, Bodega
-from .serializers import ProveedorSerializer, BodegaSerializer
 from django.shortcuts import render, redirect
 from django.db.models import Count
 from django.db.models.functions import TruncMonth
@@ -10,14 +9,7 @@ from .decorators import solo_supervisores
 from django.utils.timezone import now
 from .forms import ProveedorForm, BodegaForm, MonthSelectForm, RegistroForm
 
-class ProveedorViewSet(viewsets.ModelViewSet):
-    queryset = Proveedor.objects.all()
-    serializer_class = ProveedorSerializer
-    
-class BodegaViewSet(viewsets.ModelViewSet):
-    queryset = Bodega.objects.all()
-    serializer_class = BodegaSerializer
-    
+  
 def proveedores_list(request):
     proveedores = Proveedor.objects.filter(retirado=False)
     return render(request, 'index.html', {'proveedores': proveedores})
