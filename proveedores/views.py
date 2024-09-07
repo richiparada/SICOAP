@@ -110,8 +110,8 @@ def estadisticas_bodegas(request):
         'visitas_bodegas': visitas_bodegas,
     })
 
-#@login_required
-#@solo_supervisores
+@login_required
+@solo_supervisores
 def registro(request):
     if request.method == 'POST':
         form = RegistroForm(request.POST)
