@@ -62,6 +62,11 @@
       <li class="nav-item d-none d-sm-inline-block">
         <a href="/estadisticas_bodega" class="nav-link">Estadísticas de Bodegas</a>
       </li>
+      <li class="nav-item d-none d-sm-inline-block">
+        {% if user.is_authenticated %}
+          <a href="{% url 'logout' %}" class="nav-link">Cerrar sesión</a>
+        {% endif %}
+      </li>
     </ul>    
   </nav>
   <!-- /.navbar -->
