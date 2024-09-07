@@ -65,11 +65,13 @@ def estadisticas_proveedores(request):
     }
     return render(request, 'estadisticas.html', context)
 
+@login_required
 @solo_supervisores
 def bodega_list(request):
     bodegas = Bodega.objects.all()
     return render(request, 'listabodega.html', {'bodegas': bodegas})
 
+@login_required
 @solo_supervisores
 def bodega_crear(request):
     if request.method == 'POST':
@@ -83,6 +85,7 @@ def bodega_crear(request):
         form = BodegaForm()
     return render(request, 'bodega.html', {'form': form})
 
+@login_required
 @solo_supervisores
 def estadisticas_bodegas(request):
     form = MonthSelectForm(request.GET or None)
