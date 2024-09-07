@@ -8,16 +8,19 @@ from django.contrib.auth.forms import AuthenticationForm
 from .decorators import solo_supervisores
 from django.utils.timezone import now
 from .forms import ProveedorForm, BodegaForm, MonthSelectForm, RegistroForm
+from django.contrib.auth.decorators import login_required
 
-  
+@login_required  
 def proveedores_list(request):
     proveedores = Proveedor.objects.filter(retirado=False)
     return render(request, 'index.html', {'proveedores': proveedores})
 
+@login_required
 def proveedores_info(request):
     proveedores = Proveedor.objects.all()
     return render(request, 'info.html', {'proveedores': proveedores})
 
+@login_required
 def proveedores_registro(request):
     #Registra a los proveedores
     if request.method == 'POST':
@@ -37,6 +40,7 @@ def proveedores_registro(request):
     bodegas = Bodega.objects.all()
     return render(request, 'registro.html', {'form': form, 'bodegas': bodegas})
 
+@login_required
 def marcar_retiro(request, proveedor_id):
     #Retira a los provedores
     proveedor = Proveedor.objects.get(id=proveedor_id)
@@ -44,7 +48,8 @@ def marcar_retiro(request, proveedor_id):
     proveedor.save()
     return redirect('proveedores_list')  # Redirige al listado de proveedores
 
-@solo_supervisores
+@solo_supervisores 
+@login_required
 def estadisticas_proveedores(request):
     # Contar la cantidad de proveedores registrados por mes
     proveedores_por_mes = (
@@ -100,6 +105,7 @@ def estadisticas_bodegas(request):
         'visitas_bodegas': visitas_bodegas,
     })
 
+@login_required
 @solo_supervisores
 def registro(request):
     if request.method == 'POST':
@@ -125,3 +131,4 @@ def iniciar_sesion(request):
     else:
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
+
