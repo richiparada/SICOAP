@@ -1,4 +1,5 @@
 from django.urls import path, include
+from django.contrib.auth.views import LogoutView
 from .views import proveedores_list, proveedores_registro, proveedores_info, marcar_retiro, estadisticas_proveedores, bodega_list, bodega_crear, estadisticas_bodegas, registro, iniciar_sesion
 
 
@@ -16,4 +17,5 @@ urlpatterns = [
     path('estadisticas_bodega/', estadisticas_bodegas, name='estadisticas_bodegas'),
     path('registro_usuarios/', registro, name='registro'),
     path('login/', iniciar_sesion, name='login'),
+    path('logout/', LogoutView.as_view(), name='logout'),
 ]
