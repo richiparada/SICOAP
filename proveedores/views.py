@@ -14,7 +14,9 @@ from django.contrib import messages
 @login_required  
 def proveedores_list(request):
     proveedores = Proveedor.objects.filter(retirado=False)
-    return render(request, 'index.html', {'proveedores': proveedores})
+    numero_proveedores_activos = Proveedor.objects.filter(retirado=False).count()
+    return render(request, 'index.html', {'proveedores': proveedores , 'numero_proveedores_activos': numero_proveedores_activos})
+
 
 @login_required
 def proveedores_info(request):
@@ -110,8 +112,8 @@ def estadisticas_bodegas(request):
         'visitas_bodegas': visitas_bodegas,
     })
 
-@login_required
-@solo_supervisores
+#@login_required
+#@solo_supervisores
 def registro(request):
     if request.method == 'POST':
         form = RegistroForm(request.POST)
