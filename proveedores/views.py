@@ -110,14 +110,17 @@ def estadisticas_bodegas(request):
         'visitas_bodegas': visitas_bodegas,
     })
 
-@login_required
-@solo_supervisores
+#@login_required
+#@solo_supervisores
 def registro(request):
     if request.method == 'POST':
         form = RegistroForm(request.POST)
         if form.is_valid():
-            form.save()
+            user = form.save()
+            print(f'Usuario creado: {user.username}')
             return redirect('login')
+        else:
+            print(f'Errores del formulario: {form.errors}')
     else:
         form = RegistroForm()
     return render(request, 'registro_usuario.html', {'form': form})

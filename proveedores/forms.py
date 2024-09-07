@@ -43,9 +43,6 @@ class ProveedorForm(forms.ModelForm):
         numero_contacto = self.cleaned_data.get('numero_contacto')
         return ''.join(filter(str.isdigit, numero_contacto))  # Mantener solo dígitos
 
-    def clean_email(self):
-        email = self.cleaned_data.get('email')
-        return email.strip().lower()  # Eliminar espacios y convertir a minúsculas
 
 #Formulario para registrar Bodega
 class BodegaForm(forms.ModelForm):
