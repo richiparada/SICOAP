@@ -62,7 +62,7 @@ class MonthSelectForm(forms.Form):
         widget=forms.Select(attrs={'class': 'form-control'})
     )
     year = forms.ChoiceField(
-        choices=[(year, year) for year in range(2020, datetime.date.today().year + 1)],
+        choices=[(year, year) for year in range(2024, datetime.date.today().year + 1)],
         label="Seleccione el Año",
         widget=forms.Select(attrs={'class': 'form-control'})
     )
