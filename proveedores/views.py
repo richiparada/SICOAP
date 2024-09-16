@@ -6,7 +6,7 @@ from django.db.models.functions import TruncMonth
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import AuthenticationForm
 from .decorators import solo_supervisores
-from django.utils.timezone import now
+from django.utils import timezone
 from .forms import ProveedorForm, BodegaForm, MonthSelectForm, RegistroForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -49,6 +49,7 @@ def marcar_retiro(request, proveedor_id):
     #Retira a los provedores
     proveedor = Proveedor.objects.get(id=proveedor_id)
     proveedor.retirado = True
+    proveedor.fecha_retiro = timezone.now()  # Registra la hora actual
     proveedor.save()
     return redirect('proveedores_list')  # Redirige al listado de proveedores
 

@@ -19,6 +19,7 @@ class Proveedor(models.Model):
     numero_contacto = models.CharField(max_length=15)
     fecha_ingreso = models.DateTimeField(auto_now_add=True)
     retirado = models.BooleanField(default=False)
+    fecha_retiro = models.DateTimeField(null=True, blank=True)
     bodega = models.ForeignKey(Bodega, on_delete=models.SET_NULL, null=True, blank=True)
     
 
